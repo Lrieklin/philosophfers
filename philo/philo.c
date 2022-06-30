@@ -6,13 +6,13 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 20:16:23 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 17:13:51 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 23:41:30 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+t_data	*init(int argc, char **argv)
 {
 	t_data		*data;
 	long long	time;
@@ -31,7 +31,16 @@ int	main(int argc, char **argv)
 	if (!data->rules)
 		return (1);
 	create_rules(argv, data->rules, argc);
-	printf("%p\n", data->rules);
+	create_data(data);
+	return (data);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data		*data;
+	long long	time;
+
+	data = init(argc, argv);
 	create_data(data);
 	create_philo(data);
 	init_mutex(data);

@@ -38,20 +38,23 @@ int	create_data(t_data *data)
 
 int	init_sem(t_data *data)
 {
-	unlink("philo_forks");
-	unlink("print");
-	unlink("status");
-	unlink("status");
-	data->forks = sem_open("philo_forks", O_CREAT, S_IRWXU,
+	sem_unlink("philo_forks110");
+	sem_unlink("philo_print110");
+	sem_unlink("philo_status110");
+	sem_unlink("philo_eat110");
+	data->forks = sem_open("philo_forks110", O_CREAT, 777,
 			data->rules->number_of_philosophers);
 	if (!data->forks)
-		return (NULL);
-	data->print = sem_open("philo_print", O_CREAT, S_IRWXU, 1);
+		return (1);
+	data->print = sem_open("philo_print110", O_CREAT, 777, 1);
 	if (!data->print)
-		return (NULL);
-	data->status = sem_open("philo_status", O_CREAT, S_IRWXU, 1);
+		return (1);
+	data->status = sem_open("philo_status110", O_CREAT, 777, 1);
 	if (!data->status)
-		return (NULL);
+		return (1);
+	data->eat = sem_open("philo_eat110", O_CREAT, 777, 0);
+	if (!data->eat)
+		return (1);
 	return (0);
 }
 
@@ -60,13 +63,17 @@ void	init_philo(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->philos->rules->number_of_philosophers)
+	while (i < data->rules->number_of_philosophers)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].count_eat = 0;
 		data->philos[i].rules = data->rules;
 		data->philos[i].data = data;
 		data->philos[i].last_time_eat = get_time();
+		data->philos[i].print = data->print;
+		data->philos[i].status = data->status;
+		data->philos[i].eat = data->eat;
+		data->philos[i].forks = data->forks;
 		i++;
 	}
 }

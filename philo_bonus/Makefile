@@ -5,14 +5,16 @@ SRCS	=	create_struct_bonus.c\
 			philo_lounch.c\
 			printf_bonus.c\
 			utils_bonus.c\
+			philo_utils_bonus.c\
+			philo_bonus.c \
 			
-HEADER	=	philo.h
+HEADER	=	philo_bonus.h
 
 OBJ		=	$(SRCS:%.c=%.o)
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS	=	-Wall -Wextra -Werror -g# -fsanitize=address
 
 .PHONY	:	all clean fclean re
 

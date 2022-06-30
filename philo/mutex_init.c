@@ -6,7 +6,7 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:33:50 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 17:12:56 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 23:31:17 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,5 @@ int	init_mutex(t_data *data)
 	}
 	if (pthread_mutex_init(&data->status, NULL) != 0)
 		return (1);
-	// if (pthread_mutex_init(data->print, NULL) != 0)
-	// 	return (1);
 	return (0);
 }

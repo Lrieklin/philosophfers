@@ -6,7 +6,7 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 04:34:57 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 17:12:42 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 23:38:00 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	create_data(t_data *data)
 	data->philos = NULL;
 	data->thread = NULL;
 	data->forks = NULL;
-	// data->print = NULL;
-	// data->status = NULL;
 	data->philos = (t_philo *)
 		malloc((data->rules->number_of_philosophers) * sizeof(t_philo));
 	if (!data->philos)
@@ -44,55 +42,46 @@ int	create_data(t_data *data)
 			* sizeof(pthread_mutex_t));
 	if (!data->forks)
 		return (1);
-	// data->print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	// if (!data->print)
-	// 	return (1);
-	// data->status = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	// if (!data->status)
-	// 	return (1);
 	return (0);
+}
+
+void	check(t_philo *philo, t_data *data, int i, int count)
+{
+	if (count == 1)
+	{
+		philo[0].left_fork = &(data->forks[0]);
+		philo[0].right_fork = &(data->forks[0]);
+	}
+	else if (data->rules->number_of_philosophers != 1)
+	{
+		philo[i].left_fork = &(data->forks[i]);
+		philo[i].right_fork = &(data->forks[count - 1]);
+	}	
 }
 
 void	give_forks_to_philo(t_data *data)
 {
-	t_philo	*philo;
+	t_philo		*philo;
 	static int	i;
-	int	count;
+	int			count;
 
 	count = data->rules->number_of_philosophers;
-	// printf("count  = %d\n", count);
 	philo = data->philos;
 	if (philo[i].id == 1)
 	{
-		if (count == 1)
-		{
-			
-			philo[0].left_fork = &(data->forks[0]);
-			philo[0].right_fork = &(data->forks[0]);
-			//printf("id: %d, left: %p, right: %p\n", philo[i].id, philo[i].left_fork, philo[i].right_fork);
-		}
-		else if (data->rules->number_of_philosophers != 1)
-		{
-			philo[i].left_fork = &(data->forks[i]);
-			philo[i].right_fork = &(data->forks[count - 1]);
-			//printf("id: %d, left: %p, right: %p\n", philo[i].id, philo[i].left_fork, philo[i].right_fork);
-		}
-		i++;
+		check(philo, data, i, count);
 	}
 	else if (philo[i].id == count)
 	{
 		philo[i].left_fork = &(data->forks[count - 1]);
 		philo[i].right_fork = &(data->forks[count - 2]);
-		//printf("id: %d, left: %p, right: %p\n", philo[i].id, philo[i].left_fork, philo[i].right_fork);
-		i++;
 	}
 	else
 	{
 		philo[i].left_fork = &(data->forks[i]);
 		philo[i].right_fork = &(data->forks[i - 1]);
-		//printf("id: %d, left: %p, right: %p\n", philo[i].id, philo[i].left_fork, philo[i].right_fork);
-		i++;
 	}
+	i++;
 }
 
 void	create_philo(t_data *data)

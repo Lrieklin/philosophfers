@@ -6,13 +6,13 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:12:28 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 19:08:43 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 23:32:00 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long    get_time(void)
+long long	get_time(void)
 {
 	struct timeval	time;
 	long long		ml_sec;
