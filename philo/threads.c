@@ -6,7 +6,7 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:49:29 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 17:28:40 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:09:00 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	*philosopher(void *filos)
 	t_philo	*philo;
 
 	philo = (t_philo *)filos;
-	// if (philo->id % 2 == 0)
-	// 	usleep(500);
 	usleep((philo->id + 1) % 2 * 500);
 	while (1)
 	{
@@ -36,7 +34,6 @@ void	*philosopher(void *filos)
 		print("is sleeping\n", philo);
 		philo_sleep(philo->rules->time_to_sleep);
 		print("is thinking\n", philo);
-		usleep(300);
 	}
 	return (0);
 }
@@ -71,14 +68,14 @@ void	start_threads(t_data *data)
 	{
 		if (pthread_create(&data->thread[i], NULL,
 				philosopher, &data->philos[i]) != 0)
-			exit (1); // зафришить структуру
+			exit(1);
 		i++;
 	}
 	i = 0;
 	while (i < data->rules->number_of_philosophers)
 	{
 		if (pthread_detach(data->thread[i]) != 0)
-			exit (1); // зафришить структуру
+			exit(1);
 		i++;
 	}	
 }

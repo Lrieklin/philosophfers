@@ -6,7 +6,7 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 20:16:06 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 17:12:31 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:08:50 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_data
 {
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;
-	// pthread_mutex_t	*print;
-	// pthread_mutex_t	*status;
 	pthread_mutex_t	status;
 	long			time_start;
 	t_philo			*philos;
@@ -64,7 +62,7 @@ void		create_rules(char **argv, t_rules *rules, int argc);
 int			create_data(t_data *data);
 void		give_forks_to_philo(t_data *data);
 void		create_philo(t_data *data);
-long long	get_time();
+long long	get_time(void);
 void		start_threads(t_data *data);
 void		*philosopher(void *filos);
 void		print(char *str, t_philo *philo);

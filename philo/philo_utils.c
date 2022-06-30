@@ -6,13 +6,13 @@
 /*   By: lrieklin <lrieklin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:12:28 by lrieklin          #+#    #+#             */
-/*   Updated: 2022/06/30 17:30:06 by lrieklin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:08:43 by lrieklin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long    get_time()
+long long    get_time(void)
 {
 	struct timeval	time;
 	long long		ml_sec;
@@ -27,10 +27,10 @@ void	philo_sleep(long long time)
 	long long	start_time;
 
 	start_time = get_time();
-	usleep(time * 920);
-	while (get_time() - start_time <= time)
+	usleep(time * 820);
+	while (get_time() - start_time < time)
 	{
-		usleep(300);
+		usleep(200);
 	}
 }
 
@@ -51,7 +51,6 @@ int	eat_factor(t_data *data)
 	}
 	if (j == data->rules->number_of_philosophers)
 	{
-		// pthread_mutex_lock(data->print);
 		pthread_mutex_lock(&data->status);
 		return (1);
 	}
@@ -71,7 +70,6 @@ int	death_factor(t_data *data)
 		{
 			pthread_mutex_unlock(&data->status);
 			print("died\n", &data->philos[i]);
-			// pthread_mutex_lock(data->print);
 			pthread_mutex_lock(&data->status);
 			return (1);
 		}
@@ -95,11 +93,5 @@ void	free_struct(t_data *data)
 		}
 		free(data->forks);
 	}
-	// if (data->print != NULL)
-	// {
-	// 	pthread_mutex_destroy(data->print);
-	// 	free(data->print);
-	// }
-
 	pthread_mutex_destroy(&data->status);
 }
